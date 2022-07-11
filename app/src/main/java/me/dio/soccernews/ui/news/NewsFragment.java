@@ -28,11 +28,7 @@ public class NewsFragment extends Fragment {
 
 binding.rvNews.setLayoutManager(new LinearLayoutManager(getContext()));
         NewsViewModel.getNews().observe(getViewLifecycleOwner(), news -> {
-binding.rvNews.setAdapter(new NewsAdapter(news ,view -> {
-
-
-
-}));
+binding.rvNews.setAdapter(new NewsAdapter(news));
 
         });
 
