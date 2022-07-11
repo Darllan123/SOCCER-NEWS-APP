@@ -13,6 +13,7 @@ public class News {
     public String description;
     public String image;
     public String link;
+    public boolean favorite;
 
     }
 

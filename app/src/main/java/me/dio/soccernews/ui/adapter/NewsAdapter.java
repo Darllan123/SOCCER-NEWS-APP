@@ -3,7 +3,6 @@ package me.dio.soccernews.ui.adapter;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -19,8 +18,8 @@ import me.dio.soccernews.domain.News;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     private final List<News> news;
-    private final View.OnClickListener favoriteListener ;
-    public NewsAdapter(List<News> news , View.OnClickListener favoriteListener){
+    private final  FavoriteListener favoriteListener;
+    public NewsAdapter(List<News> news ,  FavoriteListener favoriteListener){
 
         this.news =news;
         this .favoriteListener= favoriteListener;
@@ -56,7 +55,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             holder.itemView.getContext(). startActivity(Intent.createChooser(i, "Share "));
         });
         // implementaçao da funcionalidade de "favoritar"( o evento sera instanciado pelo fragmento
-        holder.binding.ivFavorite.setOnClickListener(  this .favoriteListener);
+        holder.binding.ivFavorite.setOnClickListener(v -> {
+           news.favorite = !news.favorite;
+            this .favoriteListener.onFavorite(news);
+notifyItemChanged(position);
+        });
+
     }
 
     @Override
@@ -71,7 +75,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             this.binding= binding;
         }
     }
-
+   public  interface FavoriteListener{
+        void onFavorite(News news);
+   }
 }
 
 
